@@ -7,10 +7,12 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+    
 
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var plotLabel: UILabel!
+    @IBOutlet weak var castTableView: UITableView!
     
     
     var poster:String=""
@@ -19,6 +21,9 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        castTableView.delegate=self
+        castTableView.dataSource=self
         
         let url = URL(string: poster)!
 
@@ -30,12 +35,18 @@ class DetailViewController: UIViewController {
         
         plotLabel.numberOfLines=0
         plotLabel.text=plot
-//        for i in 0..<cast.count {
-//            castLabel.text = cast[i]["actor"] as! String
-//        }
-       
 
         // Do any additional setup after loading the view.
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cast.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell=castTableView.dequeueReusableCell(withIdentifier: "castCell", for: indexPath)
+        cell.textLabel?.text=cast[indexPath.row]["actor"] as! String
+        return cell
     }
     
 

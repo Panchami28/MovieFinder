@@ -37,7 +37,7 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
                tableView.delegate = self
                tableView.dataSource = self
                searchBar.delegate = self
-        
+        searchBar.showsCancelButton = true
      }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,7 +66,13 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
         getMovieData(globalURL)
         
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text=""
+        globalURL="https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/"
+        print(globalURL)
     }
     
     
@@ -106,7 +112,9 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
                 }
                 
             }
-           
+            DispatchQueue.main.async{
+                self.tableView.reloadData()
+            }
            
         })
 

@@ -13,10 +13,14 @@ class DetailViewController: UIViewController,UITableViewDataSource,UITableViewDe
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var plotLabel: UILabel!
     @IBOutlet weak var castTableView: UITableView!
+    @IBOutlet weak var reviewLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
     
     
     var poster:String=""
     var plot:String=""
+    var review:String=""
+    var year:String=""
     var cast=[[String:Any]]()
     
     override func viewDidLoad() {
@@ -35,7 +39,9 @@ class DetailViewController: UIViewController,UITableViewDataSource,UITableViewDe
         
         plotLabel.numberOfLines=0
         plotLabel.text=plot
-
+        reviewLabel.text="Rating: \(review)"
+        yearLabel.text="Year of release: \(year)"
+    
         // Do any additional setup after loading the view.
     }
     

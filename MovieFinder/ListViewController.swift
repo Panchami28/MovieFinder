@@ -29,8 +29,6 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-
-    @IBOutlet weak var imageIcon: UIImageView!
     
 
     override func viewDidLoad() {
@@ -42,6 +40,8 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
                tableView.dataSource = self
                searchBar.delegate = self
         searchBar.showsCancelButton = true
+        
+        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
      }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,13 +52,19 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell=tableView.dequeueReusableCell(withIdentifier: "displayCell", for: indexPath)
+        let cell=tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
         
-        cell.textLabel?.numberOfLines=0
         
-        //cell.textLabel?.text="Title: \(titleOfMovie)"+"\n" + "Rating: \(rating)" + "\n" + "Year of release: \(year)"
         
-        cell.textLabel?.text=searchArray[indexPath.row]["title"]
+        let url=URL(string:searchArray[indexPath.row]["image"]!)
+        
+        if let data = try? Data(contentsOf: url!) {
+            // Create Image and Update Image View
+            cell.posterImage!.image = UIImage(data: data)
+        }
+        
+        cell.movieLabel?.text=searchArray[indexPath.row]["title"]
+        cell.movieLabel?.numberOfLines=0
       
         return cell
     }
@@ -187,6 +193,9 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
             destinationVC.poster=movieImage
             destinationVC.plot=plotDescription
             destinationVC.cast=jsonArray
+            destinationVC.review=rating
+            destinationVC.year=year
+            
         }
     }
     

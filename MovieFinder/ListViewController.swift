@@ -25,7 +25,12 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
     var plotDescription:String=""
     var jsonArray=[[String:Any]]()
     var searchArray=[[String:String]]()
+    var flag:Int=0
+    var id:String=""
     
+    let dataFilePath=FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Movies.plist")
+    
+    var movieArray=[MovieDetail]()
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -45,7 +50,12 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
      }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchArray.count
+        if flag==1 {
+            return movieArray.count
+        }
+        else {
+            return searchArray.count
+        }
     }
     
    
@@ -54,19 +64,32 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
         let cell=tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
         
-        
-        
-        let url=URL(string:searchArray[indexPath.row]["image"]!)
-        
-        if let data = try? Data(contentsOf: url!) {
-            // Create Image and Update Image View
-            cell.posterImage!.image = UIImage(data: data)
+        if flag==1 {
+            cell.movieLabel?.text=movieArray[indexPath.row].name
+            
+            let url=URL(string:movieArray[indexPath.row].poster)
+            
+            if let data = try? Data(contentsOf: url!) {
+                // Create Image and Update Image View
+                cell.posterImage!.image = UIImage(data: data)
+            }
+            cell.movieLabel?.numberOfLines=0
+        }
+        else {
+            let url=URL(string:searchArray[indexPath.row]["image"]!)
+            
+            if let data = try? Data(contentsOf: url!) {
+                // Create Image and Update Image View
+                cell.posterImage!.image = UIImage(data: data)
+            }
+            
+            cell.movieLabel?.text=searchArray[indexPath.row]["title"]
+            cell.movieLabel?.numberOfLines=0
+          
         }
         
-        cell.movieLabel?.text=searchArray[indexPath.row]["title"]
-        cell.movieLabel?.numberOfLines=0
-      
         return cell
+        
     }
     
     
@@ -74,8 +97,14 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
        // globalURL+=(tableView.cellForRow(at: indexPath)?.textLabel?.text)!
         
-        globalURL+=searchArray[indexPath.row]["id"]!
-        
+        if flag==1 {
+            globalURL+=movieArray[indexPath.row].id
+        }
+        else {
+            globalURL+=searchArray[indexPath.row]["id"]!
+            id=searchArray[indexPath.row]["id"]!
+        }
+       
         print(globalURL)
         
         getMovieData(globalURL)
@@ -97,6 +126,9 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
         searchURL="https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/"
         globalURL="https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/"
+        
+        flag=0
+        
         //print(globalURL)
     }
     
@@ -186,10 +218,31 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
     }
     
+    
+    @IBAction func viewFavButtonPressed(_ sender: UIButton) {
+        
+        if let data=try? Data(contentsOf: dataFilePath!) {
+            let decoder=PropertyListDecoder()
+            do {
+            movieArray=try decoder.decode([MovieDetail].self, from: data)
+                flag=1
+                tableView.reloadData()
+            }catch {
+                print("Error decoding data \(error)")
+            }
+        }
+    
+        
+    }
+    
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier=="moveToDetailPage" {
             let destinationVC=segue.destination as! DetailViewController
             
+            destinationVC.name=titleOfMovie
+            destinationVC.movieId=id
             destinationVC.poster=movieImage
             destinationVC.plot=plotDescription
             destinationVC.cast=jsonArray

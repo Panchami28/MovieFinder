@@ -17,6 +17,7 @@
 		207AB5CE25F20820006AA6C7 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207AB5CC25F20820006AA6C7 /* TableViewCell.swift */; };
 		207AB5CF25F20820006AA6C7 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207AB5CD25F20820006AA6C7 /* TableViewCell.xib */; };
 		20D7913225F5D9580070615E /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D7913125F5D9580070615E /* MovieDetail.swift */; };
+		20D7913525F62EB80070615E /* FavoriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D7913425F62EB80070615E /* FavoriteTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		207AB5CC25F20820006AA6C7 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		207AB5CD25F20820006AA6C7 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		20D7913125F5D9580070615E /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
+		20D7913425F62EB80070615E /* FavoriteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				203AD5A625EF52A20084FA85 /* LaunchScreen.storyboard */,
 				203AD5A925EF52A20084FA85 /* Info.plist */,
 				20D7913125F5D9580070615E /* MovieDetail.swift */,
+				20D7913425F62EB80070615E /* FavoriteTableViewController.swift */,
 			);
 			path = MovieFinder;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 				20D7913225F5D9580070615E /* MovieDetail.swift in Sources */,
 				203AD59E25EF52A10084FA85 /* SceneDelegate.swift in Sources */,
 				203AD5B725EF96E80084FA85 /* DetailViewController.swift in Sources */,
+				20D7913525F62EB80070615E /* FavoriteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

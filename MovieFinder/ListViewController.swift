@@ -28,9 +28,9 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
     var flag:Int=0
     var id:String=""
     
-    let dataFilePath=FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Movies.plist")
     
-    var movieArray=[MovieDetail]()
+    
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -50,12 +50,12 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
      }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if flag==1 {
-            return movieArray.count
-        }
-        else {
+//        if flag==1 {
+//            return movieArray.count
+//        }
+      
             return searchArray.count
-        }
+        
     }
     
    
@@ -64,18 +64,6 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
         let cell=tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
         
-        if flag==1 {
-            cell.movieLabel?.text=movieArray[indexPath.row].name
-            
-            let url=URL(string:movieArray[indexPath.row].poster)
-            
-            if let data = try? Data(contentsOf: url!) {
-                // Create Image and Update Image View
-                cell.posterImage!.image = UIImage(data: data)
-            }
-            cell.movieLabel?.numberOfLines=0
-        }
-        else {
             let url=URL(string:searchArray[indexPath.row]["image"]!)
             
             if let data = try? Data(contentsOf: url!) {
@@ -85,8 +73,7 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
             
             cell.movieLabel?.text=searchArray[indexPath.row]["title"]
             cell.movieLabel?.numberOfLines=0
-          
-        }
+    
         
         return cell
         
@@ -97,13 +84,12 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
        // globalURL+=(tableView.cellForRow(at: indexPath)?.textLabel?.text)!
         
-        if flag==1 {
-            globalURL+=movieArray[indexPath.row].id
-        }
-        else {
+//        if flag==1 {
+//            globalURL+=movieArray[indexPath.row].id
+//        }
+        
             globalURL+=searchArray[indexPath.row]["id"]!
             id=searchArray[indexPath.row]["id"]!
-        }
        
         print(globalURL)
         
@@ -218,22 +204,7 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
     }
     
-    
-    @IBAction func viewFavButtonPressed(_ sender: UIButton) {
-        
-        if let data=try? Data(contentsOf: dataFilePath!) {
-            let decoder=PropertyListDecoder()
-            do {
-            movieArray=try decoder.decode([MovieDetail].self, from: data)
-                flag=1
-                tableView.reloadData()
-            }catch {
-                print("Error decoding data \(error)")
-            }
-        }
-    
-        
-    }
+
     
     
     
@@ -250,7 +221,9 @@ class ListViewController: UIViewController,UITableViewDataSource, UITableViewDel
             destinationVC.year=year
             
         }
+        
     }
+    
     
 
 }

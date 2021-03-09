@@ -16,9 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-LY-GXS">
-                                <rect key="frame" x="0.0" y="144" width="414" height="633"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-LY-GXS">
+                                <rect key="frame" x="0.0" y="144" width="414" height="641"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="displayCell" id="EfN-fv-dDe">
@@ -35,10 +34,12 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BtO-BN-ywO">
-                                <rect key="frame" x="153" y="785" width="108" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BtO-BN-ywO">
+                                <rect key="frame" x="120" y="785" width="174" height="47"/>
                                 <color key="backgroundColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="dQE-YX-Uhl"/>
+                                </constraints>
                                 <state key="normal" title="View Favourites">
                                     <color key="titleColor" systemColor="secondarySystemBackgroundColor"/>
                                 </state>
@@ -50,8 +51,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="eFG-LY-GXS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1Bl-zH-00x"/>
+                            <constraint firstItem="BtO-BN-ywO" firstAttribute="top" secondItem="eFG-LY-GXS" secondAttribute="bottom" id="8QK-h4-Fke"/>
+                            <constraint firstItem="eFG-LY-GXS" firstAttribute="top" secondItem="Yk5-14-1L4" secondAttribute="bottom" id="8UC-pd-sro"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BtO-BN-ywO" secondAttribute="bottom" constant="30" id="EEg-AL-4La"/>
+                            <constraint firstItem="BtO-BN-ywO" firstAttribute="top" secondItem="eFG-LY-GXS" secondAttribute="bottom" id="Qqf-Yh-J4n"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BtO-BN-ywO" secondAttribute="trailing" constant="120" id="ae2-YH-vCr"/>
                             <constraint firstItem="Yk5-14-1L4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ecu-c4-4Y8"/>
+                            <constraint firstItem="eFG-LY-GXS" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="h5m-OE-lN3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Yk5-14-1L4" secondAttribute="trailing" id="h8g-4S-n8v"/>
+                            <constraint firstItem="BtO-BN-ywO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="120" id="t6o-XQ-Svv"/>
                             <constraint firstItem="Yk5-14-1L4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wkW-cY-yab"/>
                         </constraints>
                     </view>
@@ -295,7 +304,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bmU-Ap-y4H"/>
+        <segue reference="ed6-Np-0QK"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

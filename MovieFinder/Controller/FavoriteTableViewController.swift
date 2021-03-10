@@ -11,24 +11,12 @@ class FavoriteTableViewController: UITableViewController {
 
     @IBOutlet var favoriteTableView: UITableView!
     
-    var globalURL:String="https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/"
     
-    let headers = [
-        "x-rapidapi-key": "0aa8f88433msh99f545de959cc9bp16bc3ajsn4dd85324e7f6",
-        "x-rapidapi-host": "imdb-internet-movie-database-unofficial.p.rapidapi.com"
-    ]
     
     let dataFilePath=FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Movies.plist")
     
-    var titleOfMovie:String=""
-    var rating:String=""
-    var year:String=""
-    var movieImage:String=""
-    var plotDescription:String=""
-    var jsonArray=[[String:Any]]()
-    var searchArray=[[String:String]]()
-    var flag:Int=0
-    var id:String=""
+    let networkcall=NetworkCalls()
+    
     var movieArray=[MovieDetail]()
     
     override func viewDidLoad() {
@@ -84,69 +72,32 @@ class FavoriteTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        globalURL+=movieArray[indexPath.row].id
+        networkcall.globalURL+=movieArray[indexPath.row].id
         
-        getMovieData(globalURL)
+        networkcall.getMovieData(networkcall.globalURL){
+            (success) in
+            if success==true {
+                DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "moveToDetailedPage", sender: self)
+            }
+            }
+        }
     }
     
     
-    func getMovieData(_ URL:String) {
-        
-        let request = NSMutableURLRequest(url: NSURL(string: URL)! as URL,
-                                                cachePolicy: .useProtocolCachePolicy,
-                                            timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { [self] (data, response, error) -> Void in
-            if error != nil {
-                print(error!)
-            }
-            else {
-                //let httpResponse = response as? HTTPURLResponse
-                
-                do {
-                    // make sure this JSON is in the format we expect
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
-                        // try to read out a string array
-                        print("Success getting data")
-                        //print(json)
-                        self.titleOfMovie=json["title"] as! String
-                        self.rating=json["rating"] as! String
-                        self.year=json["year"] as! String
-                        self.movieImage=json["poster"] as! String
-                        self.plotDescription=json["plot"] as! String
-                        self.jsonArray = (json["cast"] as? [[String: Any]])!
-                        
-                        DispatchQueue.main.async{
-                            self.performSegue(withIdentifier: "moveToDetailedPage", sender: self)
-                        }
-                    }
-                } catch let error as NSError {
-                    print("Failed to load: \(error.localizedDescription)")
-                }
-                
-            }
-           
-        })
-
-        
-        dataTask.resume()
-    
-    }
+   
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier=="moveToDetailedPage" {
             let destinationVC=segue.destination as! DetailViewController
             
-            destinationVC.name=titleOfMovie
-            destinationVC.movieId=id
-            destinationVC.poster=movieImage
-            destinationVC.plot=plotDescription
-            destinationVC.cast=jsonArray
-            destinationVC.review=rating
-            destinationVC.year=year
+            destinationVC.name=networkcall.titleOfMovie
+            destinationVC.movieId=networkcall.id
+            destinationVC.poster=networkcall.movieImage
+            destinationVC.plot=networkcall.plotDescription
+            destinationVC.cast=networkcall.jsonArray
+            destinationVC.review=networkcall.rating
+            destinationVC.year=networkcall.year
             
         }
         

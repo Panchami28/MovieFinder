@@ -14,6 +14,7 @@
 		203AD5A525EF52A20084FA85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203AD5A425EF52A20084FA85 /* Assets.xcassets */; };
 		203AD5A825EF52A20084FA85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203AD5A625EF52A20084FA85 /* LaunchScreen.storyboard */; };
 		203AD5B725EF96E80084FA85 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203AD5B625EF96E80084FA85 /* DetailViewController.swift */; };
+		2065109F25F79E7C0012F69F /* NetworkCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2065109E25F79E7C0012F69F /* NetworkCalls.swift */; };
 		207AB5CE25F20820006AA6C7 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207AB5CC25F20820006AA6C7 /* TableViewCell.swift */; };
 		207AB5CF25F20820006AA6C7 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 207AB5CD25F20820006AA6C7 /* TableViewCell.xib */; };
 		20D7913225F5D9580070615E /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D7913125F5D9580070615E /* MovieDetail.swift */; };
@@ -30,6 +31,7 @@
 		203AD5A725EF52A20084FA85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		203AD5A925EF52A20084FA85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		203AD5B625EF96E80084FA85 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		2065109E25F79E7C0012F69F /* NetworkCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCalls.swift; sourceTree = "<group>"; };
 		207AB5CC25F20820006AA6C7 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		207AB5CD25F20820006AA6C7 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		20D7913125F5D9580070615E /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
@@ -66,20 +68,45 @@
 		203AD59A25EF52A10084FA85 /* MovieFinder */ = {
 			isa = PBXGroup;
 			children = (
+				20E025B525F77B03002C3982 /* Model */,
+				20E025B425F77AE9002C3982 /* Controller */,
+				20E025B625F77B61002C3982 /* View */,
+				203AD5A425EF52A20084FA85 /* Assets.xcassets */,
+				203AD5A925EF52A20084FA85 /* Info.plist */,
+			);
+			path = MovieFinder;
+			sourceTree = "<group>";
+		};
+		20E025B425F77AE9002C3982 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 				203AD59B25EF52A10084FA85 /* AppDelegate.swift */,
 				203AD59D25EF52A10084FA85 /* SceneDelegate.swift */,
 				203AD59F25EF52A10084FA85 /* ListViewController.swift */,
 				203AD5B625EF96E80084FA85 /* DetailViewController.swift */,
+				20D7913425F62EB80070615E /* FavoriteTableViewController.swift */,
+				2065109E25F79E7C0012F69F /* NetworkCalls.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		20E025B525F77B03002C3982 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				20D7913125F5D9580070615E /* MovieDetail.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		20E025B625F77B61002C3982 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				203AD5A125EF52A10084FA85 /* Main.storyboard */,
+				203AD5A625EF52A20084FA85 /* LaunchScreen.storyboard */,
 				207AB5CC25F20820006AA6C7 /* TableViewCell.swift */,
 				207AB5CD25F20820006AA6C7 /* TableViewCell.xib */,
-				203AD5A425EF52A20084FA85 /* Assets.xcassets */,
-				203AD5A625EF52A20084FA85 /* LaunchScreen.storyboard */,
-				203AD5A925EF52A20084FA85 /* Info.plist */,
-				20D7913125F5D9580070615E /* MovieDetail.swift */,
-				20D7913425F62EB80070615E /* FavoriteTableViewController.swift */,
 			);
-			path = MovieFinder;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +186,7 @@
 				20D7913225F5D9580070615E /* MovieDetail.swift in Sources */,
 				203AD59E25EF52A10084FA85 /* SceneDelegate.swift in Sources */,
 				203AD5B725EF96E80084FA85 /* DetailViewController.swift in Sources */,
+				2065109F25F79E7C0012F69F /* NetworkCalls.swift in Sources */,
 				20D7913525F62EB80070615E /* FavoriteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

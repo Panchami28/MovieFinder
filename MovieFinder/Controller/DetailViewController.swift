@@ -62,7 +62,7 @@ class DetailViewController: UIViewController {
     
     
     @IBAction func favButtonPressed(_ sender: UIButton) {
-        let movie=MovieDetail()
+        var movie=MovieDetail()
 
         movie.name=name
         movie.year=Int(year)!

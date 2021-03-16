@@ -15,7 +15,7 @@ class FavoriteTableViewController: UITableViewController {
     
     let dataFilePath=FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Movies.plist")
     
-    let networkcall=NetworkCalls()
+    let networkcall=MovieDataApiManager()
     
     var movieArray=[MovieDetail]()
     
@@ -53,10 +53,8 @@ class FavoriteTableViewController: UITableViewController {
         return movieArray.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
-
        
             cell.movieLabel?.text=movieArray[indexPath.row].name
             
@@ -71,15 +69,18 @@ class FavoriteTableViewController: UITableViewController {
         return cell
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        networkcall.globalURL+=movieArray[indexPath.row].id
-        
-        networkcall.getMovieData(networkcall.globalURL){
-            (success) in
-            if success==true {
-                DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "moveToDetailedPage", sender: self)
-            }
+        if let movieId = movieArray[indexPath.row].id as? String  {
+            print(movieId)
+            networkcall.getMovieData(movieId){
+                (success) in
+                if success==true {
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "moveToDetailedPage", sender: self)
+                    }
+                }
             }
         }
     }

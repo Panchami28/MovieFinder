@@ -16,9 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreenimage" translatesAutoresizingMaskIntoConstraints="NO" id="tD3-9u-7Bn">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo2" translatesAutoresizingMaskIntoConstraints="NO" id="2Ri-ZN-lCS">
                                 <rect key="frame" x="87" y="384" width="240" height="128"/>
                                 <constraints>
@@ -28,14 +25,10 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
-                            <constraint firstItem="tD3-9u-7Bn" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="DWV-cf-bpr"/>
-                            <constraint firstItem="tD3-9u-7Bn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="NGJ-1c-ZVA"/>
                             <constraint firstItem="2Ri-ZN-lCS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="V1L-7l-Frh"/>
                             <constraint firstItem="2Ri-ZN-lCS" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Xsm-KR-RgT"/>
-                            <constraint firstAttribute="bottom" secondItem="tD3-9u-7Bn" secondAttribute="bottom" id="gJQ-qa-Seb"/>
-                            <constraint firstAttribute="trailing" secondItem="tD3-9u-7Bn" secondAttribute="trailing" id="xxv-9W-ZEx"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -45,10 +38,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchscreenimage" width="375" height="812"/>
         <image name="logo2" width="580" height="386"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

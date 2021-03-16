@@ -13,4 +13,5 @@ struct MovieDetail:Codable {
     var rating:Float=0.0
     var id:String=""
     var poster:String=""
+    
 }

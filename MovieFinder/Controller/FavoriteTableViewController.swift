@@ -11,12 +11,8 @@ import Foundation
 class FavoriteTableViewController: UITableViewController {
 
     @IBOutlet var favoriteTableView: UITableView!
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    // Lazy because file path should be accessed only when it is needed.
-    lazy var dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Movies.plist")
-    
-    var movieArray = [BasicMovie]()
+    var movieModel: FavouritesMovieModelProtocol?
     
     // MARK: -
     // MARK: - View Life Cycle
@@ -25,80 +21,83 @@ class FavoriteTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Favorites"
-        
-        //1) Create a model class
-        //2) That model class takes movie array as initialiser
-        // let movieModel = MovieModel(items: [MovieDetail])
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadingIndicator.isHidden = false
+        super.viewWillAppear(animated)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        loadingIndicator.isHidden = true
-        favoriteTableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
-        
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                movieArray = try decoder.decode([BasicMovie].self, from: data)
-            }catch {
-                print("Error decoding data \(error)")
-            }
-        }
-        
+        favoriteTableView.register(UINib(nibName: "BasicMovieCell", bundle: nil), forCellReuseIdentifier: "BasicMovieCell")
+        setupModel()
         tableView.reloadData()
     }
+
+    private func setupModel() {
+        movieModel = FavouritesMovieModel()
+    }
+
     // MARK: -
-    // MARK: - Priavte Methods
+    // MARK: - Private Methods
     // MARK: -
-    
+
     private func loadMovieDetails(forMovie movie: BasicMovie) {
         // Get refefence of the storyboard first
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         // Get reference for the target View Controller in the storyboard
-        if let detailViewController = storyboard.instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
+        if let detailViewController = storyboard.instantiateViewController(identifier: "DetailViewController") as? MovieDetailViewController {
             detailViewController.basicMovie = movie
             navigationController?.pushViewController(detailViewController, animated: true)
         }
+    }
+
+    private func deleteRow(atIndexPath indexPath: IndexPath) {
+        movieModel?.removeMovie(atIndexPath: indexPath)
     }
     
     // MARK: -
     // MARK: - Table view data source
     // MARK: -
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return movieArray.count
-        // movieModel.totalNumberOfItems
+        return movieModel?.numberOfMovies() ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCell
-        let movie = movieArray[indexPath.row]// It will give one movie object
-        cell.movieLabel?.text = movie.title // movie.name, movie.poster
-        cell.posterImage.sd_setImage(with: URL(string: movie.image), placeholderImage: UIImage(named: "placeholder"))
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BasicMovieCell", for: indexPath) as! BasicMovieCell
+        if let movie = movieModel?.item(atIndexPath: indexPath) {
+            cell.movieLabel?.text = movie.title
+            cell.posterImage.sd_setImage(with: URL(string: movie.image), placeholderImage: UIImage(named: "placeholder"))
+        }
         return cell
     }
-    
-    
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        ///same as list view
-        loadMovieDetails(forMovie: movieArray[indexPath.row])
+        if let movie = movieModel?.item(atIndexPath: indexPath) {
+            loadMovieDetails(forMovie: movie)
+        }
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72.0
+    }
+
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Delete"
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            deleteRow(atIndexPath: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        default:
+            break
+        }
+    }
 
 }

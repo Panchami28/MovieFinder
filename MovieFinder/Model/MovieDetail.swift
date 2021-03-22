@@ -22,8 +22,8 @@ struct MovieDetail: Codable {
     let cast: [Cast]
     
     var castString: String? {
-        let casts = cast.compactMap { $0.actor }
-        let formattedCast = casts.joined(separator: " as ")
+        let casts = cast.compactMap { "\($0.actor) as \($0.character)" }
+        let formattedCast = casts.joined(separator: "\n")
         return formattedCast
     }
 }

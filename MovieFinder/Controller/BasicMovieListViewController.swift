@@ -12,14 +12,12 @@ class BasicMovieListViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
-    
-    
+
     // MARK: -
     // MARK: Variables
     // MARK: -
 
-    var basicMovieModel: BasicMovieModel?
+    var basicMovieModel: MovieModelProtocol?
 
     // MARK: -
     // MARK: Variables
@@ -48,7 +46,7 @@ class BasicMovieListViewController: UIViewController {
         // Get refefence of the storyboard first
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         // Get reference for the target View Controller in the storyboard
-        if let detailViewController = storyboard.instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
+        if let detailViewController = storyboard.instantiateViewController(identifier: "DetailViewController") as? MovieDetailViewController {
             detailViewController.basicMovie = movie
 //            print("PanchamiDebug: \(#file), \(#function) Movie Identifier is:\(detailViewController.movieID)")
             navigationController?.pushViewController(detailViewController, animated: true)
@@ -63,17 +61,18 @@ class BasicMovieListViewController: UIViewController {
     }
 
 }
+
 // MARK: -
 // MARK: Tableview DataSource and Delegates
 // MARK: -
 extension BasicMovieListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return basicMovieModel?.numberOfItems() ?? 0
+        return basicMovieModel?.numberOfMovies() ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! BasicMovieCell
-        if let movie = basicMovieModel?.item(atIndex: indexPath.row) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BasicMovieCell", for: indexPath) as! BasicMovieCell
+        if let movie = basicMovieModel?.item(atIndexPath: indexPath) {
             cell.posterImage.sd_setImage(with: URL(string: movie.image), placeholderImage: UIImage(named: "placeholder"))
             cell.movieLabel?.text = movie.title
         }
@@ -81,11 +80,20 @@ extension BasicMovieListViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let movie = basicMovieModel?.item(atIndex: indexPath.row) {
+        if let movie = basicMovieModel?.item(atIndexPath: indexPath) {
             loadMovieDetails(forMovie: movie)
         }
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Currently Cell's image is 64 and
+        // there is 4 pixel padding on top and bottom
+        // hence 64 + 4 + 4 = 72
+        // Change this value if cell's image height changes
+        return 72.0
+    }
 }
+
 // MARK: -
 // MARK: Searchbar Delegate
 // MARK: -

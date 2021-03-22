@@ -20,20 +20,33 @@ struct BasicMovieList: Codable {
     }
 }
 
-class BasicMovieModel {
-    private var basicMovieList: BasicMovieList?
+protocol MovieModelProtocol {
+    func numberOfMovies() -> Int
+    func item(atIndexPath indexPath: IndexPath) -> BasicMovie?
+}
+
+protocol FavouritesMovieModelProtocol: MovieModelProtocol {
+    func removeMovie(atIndexPath indexPath: IndexPath)
+}
+
+class BasicMovieModel: MovieModelProtocol {
+    
+    private var movies: [BasicMovie]
     
     init(movieList: BasicMovieList) {
-        basicMovieList = movieList
+        movies = movieList.movies
     }
-    
-    func numberOfItems() -> Int {
-        return basicMovieList?.movies.count ?? 0
+
+    func numberOfMovies() -> Int {
+        return movies.count
     }
-    
-    func item(atIndex index: Int) -> BasicMovie? {
-        return basicMovieList?.movies[index]
+
+    func item(atIndexPath indexPath: IndexPath) -> BasicMovie? {
+        return movies[indexPath.row]
     }
-    
+
+    func removeMovie(atIndexPath indexPath: IndexPath) {
+        movies.remove(at: indexPath.row)
+    }
 }
 
